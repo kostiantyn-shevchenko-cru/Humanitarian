@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ============================================================================
+     ⚠️  BEFORE PUBLISHING — every item below is a placeholder. Search "TODO" in place.
+
+       1. https://example.org/            → real published URL (canonical, og:url, hreflang)
+       2. og:image / twitter:image        → ≥1200×630, hosted on your own domain, NOT
+                                            raw.githubusercontent.com (no cache guarantees;
+                                            Facebook often refuses to scrape it)
+       3. CAMPAIGN.goal (bottom <script>) → real target in USD. While it is 0 the
+                                            progress bar stays hidden automatically.
+       4. LiqPay link                   → payload has amount hard-coded to $50 and a broken
+                                            description string. See the comment at the link.
+     ============================================================================ -->
+
+<title>Help Rebuild Ukraine for Christ's Humanitarian Hub</title>
+<meta name="description" content="On August 28, 2026, a Russian attack destroyed the warehouse and office of Ukraine for Christ's Humanitarian Ministry. Help us establish a new long-term humanitarian hub to keep serving people across Ukraine.">
+
+<!-- TODO: replace https://example.org/ with the real published URL everywhere below (canonical, og:url, og:image, twitter:image, hreflang). -->
+<link rel="canonical" href="https://example.org/">
+<link rel="alternate" hreflang="en" href="https://example.org/">
+<link rel="alternate" hreflang="x-default" href="https://example.org/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Help Rebuild Ukraine for Christ's Humanitarian Hub">
+<meta property="og:description" content="On August 28, 2026, a Russian attack destroyed the warehouse and office of Ukraine for Christ's Humanitarian Ministry. Help us build a new long-term humanitarian hub.">
+<meta property="og:url" content="https://example.org/">
+<meta property="og:image" content="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_1_2026-09-02_15-43-57.jpg">
+<meta property="og:image:width" content="1170">
+<meta property="og:image:height" content="780">
+<meta property="og:image:alt" content="Rescue workers in the rubble of the destroyed humanitarian warehouse, its steel roof frame collapsed.">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="Ukraine for Christ">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Help Rebuild Ukraine for Christ's Humanitarian Hub">
+<meta name="twitter:description" content="On August 28, 2026, a Russian attack destroyed the warehouse and office of Ukraine for Christ's Humanitarian Ministry. Help us build a new long-term humanitarian hub.">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_1_2026-09-02_15-43-57.jpg">
+<meta name="twitter:image:alt" content="Rescue workers in the rubble of the destroyed humanitarian warehouse.">
+<!-- TODO: add the ministry's X/Twitter handle if there is one: <meta name="twitter:site" content="@..."> -->
+
+<meta name="theme-color" content="#0f172a">
+<!-- Favicon: the ministry's own mark, replacing the improvised inline SVG cross.
+     TODO: move this file to your own domain along with the other images — a browser
+     that cannot reach raw.githubusercontent.com falls back to a blank tab icon. -->
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/Ukraine%20for%20Christ%20(1)%201.png">
+<link rel="apple-touch-icon" href="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/Ukraine%20for%20Christ%20(1)%201.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800;900&display=swap"><!-- FIX: dropped unused Montserrat 600 (nothing in the CSS below uses it) -->
+
+<style>
+  /* ============================================================
+     Design tokens — derived from k-shevchenko.com (see design-tokens.md)
+     ============================================================ */
+  :root{
+    --bg-page:#F8FAFC;
+    --panel:#FFFFFF;
+    --panel-quiet:#F1F5F9;
+    --ink:#0F172A;
+    --text:#334155;
+    --muted:#556070;
+    --border:#E2E8F0;
+    /* FIX: colour now encodes exactly one thing — gold means "act".
+       Gold is reserved for the donation CTA and the countdown chips; slate carries
+       structure; the Cru teal appears only on the Cru giving card, where it means
+       "this is Cru's platform". The old --green / --red accents are gone: they were
+       decorating project cards and figure captions, which made colour meaningless
+       as a signal. */
+    --brand:#F9B625;
+    --brand-ink:#1F2937;
+    --brand-tint:#FEF6E4;
+    --brand-line:#EBD8AE;
+    --brand-edge:#B57F08;  /* 3.34:1 against the page — gives the gold CTA a defined edge */
+    --cru:#007398;         /* Cru giving card only */
+    --dark:#0F172A;
+    --dark-2:#1E293B;
+
+    --r-panel:24px;
+    --r-card:16px;
+    --r-btn:12px;
+    --r-pill:999px;
+
+    --shadow-card:0 1px 2px rgba(15,23,42,.06);
+    --shadow-hover:0 20px 25px -5px rgba(15,23,42,.12), 0 8px 10px -6px rgba(15,23,42,.10);
+
+    --wrap:1280px;
+    --gap:clamp(20px, 4vw, 32px);
+    --anchor-offset:104px;   /* FIX: kept in sync with the real header height by JS */
+
+    --font-head:'Montserrat', "Helvetica Neue", Arial, sans-serif;
+    --font-body:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  }
+
+  /* ============================================================ Reset / base */
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg-page);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:1.125rem;      /* 18px base */
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  h1,h2,h3,h4{font-family:var(--font-head);color:var(--ink);margin:0 0 .5em}
+  h1{font-weight:900;font-size:clamp(2.25rem, 6vw, 4.25rem);line-height:1.03;letter-spacing:-.02em}
+  h2{font-weight:800;font-size:clamp(1.6rem, 3.4vw, 2rem);line-height:1.18;letter-spacing:-.018em}
+  h3{font-weight:700;font-size:1.375rem;line-height:1.3;letter-spacing:-.01em}
+  h4{font-weight:800;font-size:1.0625rem;line-height:1.35}
+  p{margin:0 0 1.1em;max-width:68ch}
+  /* FIX: body links were Cru teal, the same colour as the Cru giving card, so the
+     accent stopped meaning "giving path". Links are ink with a quiet underline;
+     the underline turns gold on hover. */
+  a{color:var(--ink);text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(15,23,42,.32);transition:text-decoration-color .15s ease}
+  a:hover{text-decoration-color:var(--brand-edge)}
+  img{max-width:100%;height:auto;display:block}
+  strong{font-weight:700;color:var(--ink)}
+
+  :focus-visible{outline:3px solid var(--brand-ink);outline-offset:3px;border-radius:4px}
+  .on-dark :focus-visible,.hero :focus-visible{outline-color:#fff}
+
+  .skip{
+    position:absolute;left:-9999px;top:0;z-index:200;
+    background:var(--ink);color:#fff;padding:12px 20px;border-radius:0 0 var(--r-btn) 0;
+    font-weight:600;text-decoration:none;
+  }
+  .skip:focus{left:0}
+  .vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+  /* ============================================================ Layout */
+  .wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:clamp(16px, 4vw, 32px)}
+  main{display:block;padding:var(--gap) 0 0}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--r-panel);
+    padding:clamp(32px, 6vw, 72px);
+    margin-bottom:var(--gap);
+    scroll-margin-top:var(--anchor-offset); /* FIX: was a fixed 104px against a header that collapses to ~48px */
+  }
+  .panel--quiet{background:var(--panel-quiet);border-color:#E7EBF0}
+  .panel > :last-child{margin-bottom:0}
+  .measure{max-width:64ch}
+  .eyebrow{
+    font-family:var(--font-head);font-weight:700;font-size:.8125rem;
+    letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+    margin:0 0 1em;
+  }
+  .section-intro{font-size:1.15rem;color:var(--text);margin-bottom:2rem}
+
+  /* ============================================================ Header */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(255,255,255,.72);
+    -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(226,232,240,.7);
+    transition:box-shadow .2s ease;
+  }
+  header.is-scrolled{box-shadow:0 4px 18px rgba(15,23,42,.08)}
+  .bar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:16px 0;transition:padding .2s ease;
+  }
+  header.is-scrolled .bar{padding:8px 0}
+  /* FIX: the header used an improvised gold-cross SVG plus stacked "UKRAINE / FOR /
+     CHRIST" type, which was a different mark from the real logo in the footer.
+     Both now use the same file. */
+  .logo{display:flex;align-items:center;text-decoration:none}
+  .logo img{height:40px;width:auto;transition:height .2s ease;flex:none}
+  header.is-scrolled .logo img{height:32px}
+  /* ---- Buttons: one system for every control on the page.
+     Pill shape, a two-layer shadow tinted with the button's own colour, a 1px darker
+     edge (no gold reaches 3:1 against a near-white page, so without an edge the shape
+     is defined by hue alone), a 1px lift on hover and a real press on :active. ---- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:.55em;
+    font-family:var(--font-head);font-weight:700;
+    font-size:.9375rem;letter-spacing:.045em;line-height:1.25;
+    text-transform:uppercase;text-align:center;text-decoration:none;
+    cursor:pointer;border:1px solid transparent;border-radius:var(--r-pill);
+    padding:16px 32px;min-height:54px;
+    transition:transform .16s cubic-bezier(.2,.7,.3,1), box-shadow .16s ease, background .16s ease;
+  }
+  .btn svg{width:1.05em;height:1.05em;flex:none;transition:transform .16s ease}
+  .btn:active{transform:translateY(1px) scale(.995)}
+
+  .btn--primary{
+    background:linear-gradient(180deg,#FBC64E 0%,var(--brand) 55%,#F2AC17 100%);
+    color:var(--brand-ink);border-color:var(--brand-edge);
+    box-shadow:0 1px 2px rgba(15,23,42,.10), 0 10px 20px -12px rgba(181,127,8,.85);
+  }
+  .btn--primary:hover{
+    transform:translateY(-1px);
+    box-shadow:0 2px 4px rgba(15,23,42,.10), 0 16px 28px -14px rgba(181,127,8,.95);
+  }
+  .btn--primary:hover svg{transform:translate(2px,-2px)}
+  /* .btn--ghost removed — the hero's secondary action is a text link now. */
+
+  /* The header CTA is the only persistent control on desktop, so it carries the accent. */
+  .btn--pill{
+    background:linear-gradient(180deg,#FBC64E 0%,var(--brand) 55%,#F2AC17 100%);
+    color:var(--brand-ink);border-color:var(--brand-edge);
+    padding:11px 26px;min-height:0;font-size:.8125rem;
+    box-shadow:0 1px 2px rgba(15,23,42,.08), 0 6px 14px -10px rgba(181,127,8,.9);
+  }
+  .btn--pill:hover{transform:translateY(-1px);box-shadow:0 2px 5px rgba(15,23,42,.10), 0 10px 18px -10px rgba(181,127,8,.95)}
+  .btn--block{width:100%;padding:17px 26px}
+
+  /* ============================================================ Hero */
+  .hero{
+    position:relative;overflow:hidden;
+    background:var(--dark);color:#fff;
+    border-radius:var(--r-panel);
+    min-height:clamp(520px, 74vh, 760px);
+    display:flex;align-items:center;
+    padding:clamp(40px, 6vw, 72px) clamp(24px, 5vw, 72px);
+    margin-bottom:var(--gap);
+    scroll-margin-top:var(--anchor-offset); /* FIX: was a fixed 104px against a header that collapses to ~48px */
+  }
+  .hero__media{position:absolute;inset:0;z-index:0}
+  .hero__media img{width:100%;height:100%;object-fit:cover;object-position:center 40%}
+  /* FIX: the horizontal scrim faded to 6% at the right edge, which was fine while the
+     right third of the hero held nothing. It now carries the stat card, so the wash
+     continues across the full width. */
+  .hero__scrim{
+    position:absolute;inset:0;z-index:1;
+    background:
+      linear-gradient(180deg, rgba(15,23,42,.55) 0%, rgba(15,23,42,.45) 45%, rgba(15,23,42,.82) 100%),
+      linear-gradient(90deg, rgba(15,23,42,.78) 0%, rgba(15,23,42,.42) 58%, rgba(15,23,42,.34) 100%);
+  }
+  /* FIX: the right ~38% of the hero was empty photo next to a 16ch headline.
+     The credibility numbers moved off the thin strip below the CTA and into it. */
+  .hero__inner{
+    position:relative;z-index:2;width:100%;
+    display:grid;grid-template-columns:1.05fr minmax(260px,330px);
+    gap:clamp(28px,4vw,56px);align-items:center;
+  }
+  .hero__col{min-width:0}
+  .hero h1{color:#fff;max-width:16ch;font-size:clamp(2rem, 5vw, 3.75rem);margin:0}
+  .hero__sub{
+    font-size:clamp(1.1rem,1.9vw,1.3rem);color:rgba(255,255,255,.92);
+    max-width:52ch;margin:1.1rem 0 2rem;
+  }
+  .hero__cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+  /* FIX: the ghost button competed with the primary CTA for the same eye.
+     The secondary action is now a text link with no button weight. */
+  .hero__link{
+    color:#fff;font-family:var(--font-head);font-weight:700;font-size:.95rem;
+    letter-spacing:.03em;text-transform:uppercase;
+    text-decoration:none;border-bottom:2px solid rgba(255,255,255,.35);padding-bottom:2px;
+    transition:border-color .15s ease;
+  }
+  .hero__link:hover{border-bottom-color:#fff}
+  /* On the dark hero the gold-tinted shadow reads as a halo, so the CTA gets a neutral one. */
+  .hero .btn--primary{box-shadow:0 2px 4px rgba(0,0,0,.28), 0 14px 26px -14px rgba(0,0,0,.75)}
+  .hero .btn--primary:hover{box-shadow:0 3px 6px rgba(0,0,0,.30), 0 20px 34px -16px rgba(0,0,0,.8)}
+  /* Credibility card in the hero's right column. */
+  .hero__card{
+    background:rgba(15,23,42,.58);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,.20);
+    border-top:3px solid var(--brand);
+    border-radius:var(--r-card);
+    padding:24px 26px;
+  }
+  .hero__card ul{margin:0;padding:0;list-style:none}
+  .hero__card li{padding:.9rem 0;border-top:1px solid rgba(255,255,255,.14)}
+  .hero__card li:first-child{padding-top:0;border-top:0}
+  .hero__card li:last-child{padding-bottom:0}
+  .hero__card b{
+    display:block;font-family:var(--font-head);font-weight:900;color:#fff;
+    font-size:1.75rem;line-height:1;letter-spacing:-.02em;
+  }
+  .hero__card span{display:block;margin-top:.35rem;font-size:.9rem;line-height:1.4;color:rgba(255,255,255,.82)}
+
+  /* ============================================================ What happened */
+  .statement{
+    font-family:var(--font-head);font-weight:700;
+    font-size:clamp(1.25rem,2.4vw,1.6rem);line-height:1.35;color:var(--ink);
+    border-left:4px solid var(--brand);padding-left:1rem;margin:1.6em 0 0;max-width:36ch;
+  }
+  .gallery{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-top:2.4rem;
+  }
+  /* FIX: the strongest asset on this page was split across two sections — the stocked
+     warehouse sat in "Impact", the rubble in "What happened", so the reader never saw
+     the two together. Same building, same framing, side by side. */
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap);margin-top:2.4rem}
+  .ba figure{margin:0;position:relative}
+  .ba img{
+    border-radius:var(--r-card);border:1px solid var(--border);
+    width:100%;aspect-ratio:4/3;object-fit:cover;
+  }
+  figure{margin:0}
+  figure img{border-radius:var(--r-card);border:1px solid var(--border);width:100%}
+  figcaption{font-size:.9rem;color:var(--muted);margin-top:.7rem}
+  /* FIX: dates were red, which reads as an error state in a caption. Weight, not hue. */
+  figcaption .date{color:var(--ink);font-weight:600}
+
+  /* ============================================================ Impact / stats */
+  /* FIX: minmax(200px) put five cards in one row at ~200px each, where the
+     nowrap "600 + tons" overflowed its card. 240px forces a safer wrap. */
+  .stats{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:var(--gap);margin:2rem 0 2.6rem;
+  }
+  .stat{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--r-card);
+    padding:24px;box-shadow:var(--shadow-card);
+  }
+  .stat__n{
+    font-family:var(--font-head);font-weight:900;color:var(--ink);
+    font-size:clamp(1.9rem,2.6vw,2.4rem);line-height:1.05;letter-spacing:-.02em;
+    display:flex;align-items:baseline;gap:.12em;flex-wrap:wrap; /* FIX: was white-space:nowrap → overflowed narrow cards */
+  }
+  .stat__n .unit{font-size:.5em;font-weight:800;color:var(--muted);letter-spacing:0;white-space:nowrap}
+  .stat__l{margin:.7rem 0 0;font-size:.98rem;color:var(--text)}
+  /* FIX: the band cropped its photo to 420px with object-fit:cover, and the caption
+     sat inside the border with no bottom padding, so the paragraph after it started
+     flush against the box. The photo is now shown whole and the caption follows the
+     same rhythm as every other figcaption on the page. */
+  .band{margin:2.4rem 0}
+  .band img{
+    width:100%;height:auto;
+    border-radius:var(--r-card);border:1px solid var(--border);
+  }
+  .band figcaption{padding:0}
+
+  /* ============================================================ Rebuild / projects */
+  .projects{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:var(--gap);margin:2rem 0 2.4rem;
+  }
+  /* FIX: four cards, four different accent colours (#B7860B / #007398 / #475569 /
+     #16A34A) made this row look like a SaaS feature grid and spent four hues on
+     information that carries no action. One neutral treatment; the colour budget
+     goes to the CTA instead. */
+  .project{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--r-card);
+    padding:26px;box-shadow:var(--shadow-card);
+    border-top:4px solid #CBD5E1;
+    display:flex;flex-direction:column;
+    transition:border-top-color .15s ease;
+  }
+  .project:hover{border-top-color:var(--brand)}
+  .project__icon{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+    background:var(--panel-quiet);color:#475569;margin-bottom:14px;
+  }
+  .project__icon svg{width:24px;height:24px}
+  .project h3{font-size:1.15rem;margin-bottom:.35em}
+  .project p{font-size:.98rem;margin:0}
+  /* FIX: a photo lived in the Rebuild card only, so the other three cards stretched
+     to its height and showed a block of empty space. The photo moved out to a band
+     figure below the grid (see markup), keeping all four cards equal. */
+
+  /* ============================================================ Christmas priority */
+  /* FIX: a full-bleed saturated gold section was the loudest element on the page —
+     louder than the donate button — and a cheerful yellow slab sits badly next to an
+     account of a strike. Warm tint + a gold rule keeps the warmth; the saturated gold
+     survives only in the countdown chips, where it is the accent moment. */
+  .christmas{
+    background:var(--brand-tint);color:var(--text);
+    border:1px solid var(--brand-line);border-left:4px solid var(--brand);
+    border-radius:var(--r-panel);
+    padding:clamp(32px,6vw,72px);margin-bottom:var(--gap);
+  }
+  .christmas h2{color:var(--ink)}
+  .christmas p{color:var(--text);max-width:60ch}
+  /* FIX: align-items:center + a 1100×1280 portrait photo in the narrow column
+     stretched the whole row. Start-aligned, with the photo capped. */
+  .christmas__grid{display:grid;grid-template-columns:1.15fr .85fr;gap:var(--gap);align-items:start}
+  .christmas img{border-radius:var(--r-card);border:1px solid var(--brand-line);width:100%;max-height:460px;object-fit:cover;object-position:center 30%}
+  .count{display:flex;gap:14px;flex-wrap:wrap;margin:1.4rem 0 .6rem}
+  .count div{
+    background:var(--brand);border:1px solid var(--brand-edge);
+    border-radius:12px;padding:12px 18px;text-align:center;min-width:78px;
+  }
+  .count__n{font-family:var(--font-head);font-weight:900;font-size:1.9rem;line-height:1;display:block;color:var(--brand-ink)}
+  .count__u{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:#3a3320} /* 7.02:1 on gold */
+  .count[hidden]{display:none} /* FIX: display:flex used to beat the hidden attribute once the date passed */
+  .count__label{font-size:.9rem;font-weight:600;color:var(--muted);margin:0}
+
+  /* ============================================================ Partner / give */
+  .lead{font-size:clamp(1.2rem,2.3vw,1.45rem);color:var(--ink);font-weight:500;max-width:44ch}
+  .give-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:var(--gap);margin-top:1.6rem;
+  }
+  .give-card{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--r-card);
+    padding:30px;display:flex;flex-direction:column;box-shadow:var(--shadow-card);
+  }
+  .give-card h4{font-size:1.2rem}
+  .give-card p{font-size:.97rem;color:var(--text);flex:1}
+  /* The two descriptions are different lengths, so without this the buttons landed at
+     different heights. Subgrid makes both cards share the same three rows — heading,
+     text, button — so the CTAs line up however the copy wraps. The flex rule above is
+     the fallback where subgrid is unsupported. */
+  @supports (grid-template-rows: subgrid){
+    @media (min-width:861px){
+      .give-grid{grid-template-rows:repeat(3,auto);row-gap:0}
+      .give-card{display:grid;grid-template-rows:subgrid;grid-row:span 3;align-content:start}
+      .give-card p{flex:none}
+    }
+  }
+  .give-card--cru{border-top:4px solid var(--cru)}
+  .give-card--direct{border-top:4px solid var(--brand)}
+  .give-card .btn{margin-top:16px}
+  .give-card--cru .btn{
+    background:linear-gradient(180deg,#0A85AE 0%,var(--cru) 55%,#00637F 100%);
+    color:#fff;border-color:#005876;
+    box-shadow:0 1px 2px rgba(15,23,42,.10), 0 10px 20px -12px rgba(0,115,152,.85);
+  }
+  .give-card--cru .btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 2px 4px rgba(15,23,42,.10), 0 16px 28px -14px rgba(0,115,152,.95);
+  }
+  .give-card--direct .btn{
+    background:linear-gradient(180deg,#FBC64E 0%,var(--brand) 55%,#F2AC17 100%);
+    color:var(--brand-ink);border-color:var(--brand-edge);
+    box-shadow:0 1px 2px rgba(15,23,42,.10), 0 10px 20px -12px rgba(181,127,8,.85);
+  }
+  .give-card--direct .btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 2px 4px rgba(15,23,42,.10), 0 16px 28px -14px rgba(181,127,8,.95);
+  }
+  .give-card .btn:hover svg{transform:translate(2px,-2px)}
+  .fineprint{font-size:.82rem;color:var(--muted);margin:.9rem 0 0}
+
+  /* ---- Progress bar — renders only when CAMPAIGN.goal > 0 (see <script>) ---- */
+  .progress{margin:1.8rem 0 0;max-width:640px}
+  .progress__meta{display:flex;justify-content:space-between;font-family:var(--font-head);font-weight:800;color:var(--ink);margin-bottom:.5rem}
+  .progress__meta .goal{color:var(--muted);font-weight:700}
+  .progress__track{height:14px;background:var(--panel-quiet);border:1px solid var(--border);border-radius:999px;overflow:hidden}
+  .progress__fill{height:100%;width:0;background:var(--brand);border-radius:999px;transition:width .6s ease}
+  .progress__donors{font-size:.9rem;color:var(--muted);margin:.6rem 0 0}
+
+  /* ============================================================ Prayer */
+  .prayer{background:var(--dark);color:#fff;border-radius:var(--r-panel);padding:clamp(32px,6vw,64px);margin-bottom:var(--gap)}
+  .prayer h2{color:#fff}
+  .prayer p{color:rgba(255,255,255,.85);max-width:56ch;margin:0}
+
+  /* ============================================================ Footer
+     Rebuilt 1:1 from k-shevchenko.com (Tailwind classes translated to plain CSS,
+     same slate/brand palette, same structure and copy). */
+  .footer-wrap{padding-bottom:clamp(32px,6vw,56px)}
+  .site-footer{
+    background:#fff;border:1px solid #E2E8F0;border-radius:24px;
+    box-shadow:0 1px 2px rgba(0,0,0,.05);
+    padding:32px;margin-top:24px;
+    display:flex;flex-direction:column;gap:28px;
+    align-items:center;
+    font-family:var(--font-body);
+  }
+  .site-footer__col{flex:1;display:flex;flex-direction:column;min-width:0}
+  .site-footer__col--left{align-items:center;text-align:center}
+  .site-footer__col--right{align-items:center;justify-content:space-between;gap:24px}
+
+  .foot-logos{display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .foot-logos img{width:auto;height:40px;opacity:.9}
+
+  .foot-verse{
+    font-family:var(--font-head);font-weight:700;font-size:1rem;line-height:1.4;
+    color:#0F172A;max-width:26rem;margin:0;
+  }
+  .foot-verse span{display:block;font-weight:400;font-size:.75rem;color:#64748B;margin-top:6px}
+
+  .foot-social{display:flex;align-items:center;gap:12px}
+  .foot-social a{
+    width:48px;height:48px;border-radius:9999px;
+    background:#F8FAFC;border:1px solid #E2E8F0;color:#334155;
+    display:flex;align-items:center;justify-content:center;
+    transition:background-color .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .foot-social a:hover{background:#F9B625;border-color:#F9B625;color:#0F172A}
+  .foot-social svg{width:20px;height:20px}
+
+  .foot-copy{font-size:.875rem;font-weight:600;color:#64748B;margin:0}
+
+  @media (min-width:768px){
+    .site-footer{flex-direction:row;justify-content:space-between;align-items:stretch;padding:44px 48px;gap:32px}
+    .site-footer__col--left{align-items:flex-start;text-align:left}
+    .site-footer__col--right{align-items:flex-end}
+    .foot-logos{justify-content:flex-start}
+  }
+
+  /* ============================================================ Lightbox
+     Every photo in a <figure> opens full size. Keyboard operable: the images become
+     buttons, Esc closes, focus returns to the image that was opened. */
+  .zoomable{cursor:zoom-in}
+  .zoomable:focus-visible{outline:3px solid var(--brand-edge);outline-offset:3px}
+  .lb{
+    position:fixed;inset:0;z-index:200;
+    background:rgba(9,14,26,.95);
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+    display:flex;align-items:center;justify-content:center;
+    padding:clamp(16px,4vw,56px);
+  }
+  .lb[hidden]{display:none}
+  .lb figure{
+    margin:0;display:flex;flex-direction:column;gap:14px;
+    max-width:min(1400px,100%);max-height:100%;
+  }
+  .lb img{
+    max-width:100%;max-height:calc(100vh - 170px);
+    width:auto;height:auto;margin-inline:auto;
+    object-fit:contain;border-radius:var(--r-card);
+  }
+  .lb figcaption{
+    color:rgba(255,255,255,.82);text-align:center;font-size:.95rem;
+    max-width:70ch;margin-inline:auto;
+  }
+  .lb figcaption .date{color:#fff;font-weight:600}
+  .lb__close{
+    position:absolute;top:clamp(12px,2vw,24px);right:clamp(12px,2vw,24px);
+    width:48px;height:48px;border-radius:var(--r-pill);cursor:pointer;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.30);
+    color:#fff;display:grid;place-items:center;
+  }
+  .lb__close:hover{background:rgba(255,255,255,.22)}
+  .lb__close svg{width:22px;height:22px}
+  body.lb-open{overflow:hidden}
+
+  /* ============================================================ Reveal on scroll */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ============================================================ Responsive */
+  @media (max-width:960px){
+    .hero__inner{grid-template-columns:1fr;gap:28px;align-items:start}
+    /* FIX: once the hero stacks, its top padding was smaller than the sticky header,
+       so the first line of the H1 sat underneath it. */
+    .hero{align-items:flex-start;padding-top:calc(var(--anchor-offset) + 20px)}
+  }
+  @media (max-width:860px){
+    .christmas__grid{grid-template-columns:1fr}
+    .give-grid{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    .ba{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .logo img{height:32px}
+    header.is-scrolled .logo img{height:28px}
+    .hero{min-height:78svh;padding:calc(var(--anchor-offset) + 20px) 22px 40px}
+    .btn--primary{width:100%}
+    .hero__cta{gap:14px}
+    .panel,.christmas,.prayer{padding:28px 20px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn{transition:none}
+    *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  }
+</style>
+
+<noscript><style>
+  .reveal{opacity:1;transform:none}
+  .count{display:none}
+  .progress{display:none}
+</style></noscript>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header id="top">
+  <div class="wrap">
+    <div class="bar">
+      <a class="logo" href="#top" aria-label="Ukraine for Christ — home">
+        <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/Ukraine%20for%20Christ%20(1).png"
+             alt="Ukraine for Christ" width="1600" height="587" fetchpriority="high">
+      </a>
+      <a class="btn btn--pill" href="#give">Give</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+
+  <!-- ============================= HERO ============================= -->
+  <section class="hero" aria-labelledby="hero-h1">
+    <div class="hero__media">
+      <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_1_2026-09-02_15-43-57.jpg"
+           width="1170" height="780" fetchpriority="high"
+           alt="Rescue workers walk through the rubble of the destroyed humanitarian warehouse, its steel roof frame collapsed and smoke still hanging in the air.">
+    </div>
+    <div class="hero__scrim"></div>
+    <div class="hero__inner">
+      <div class="hero__col">
+      <!-- COPY: title and subtitle, verbatim from the source document. -->
+      <h1 id="hero-h1">Help Rebuild Ukraine for Christ's Humanitarian Hub</h1>
+      <p class="hero__sub">Restore a place from which practical help and the hope of the Gospel can continue to reach people across Ukraine.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#give">Help rebuild the hub</a>
+        <a class="hero__link" href="#what-happened">What happened</a>
+      </div>
+      </div>
+
+      <!-- Fills the empty right third of the hero. Every word here is lifted verbatim
+           from the "What God Has Already Done" list in the source document — no new
+           copy was written for it. Delete the whole <aside> if you would rather the
+           numbers appeared only once, in their own section further down. -->
+      <aside class="hero__card">
+        <ul>
+          <li><b>175,000</b><span>food boxes prepared for people in need</span></li>
+          <li><b>600+ tons</b><span>of humanitarian aid received and delivered</span></li>
+          <li><b>300+</b><span>churches and nonprofit organizations across Ukraine</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================= WHAT HAPPENED ============================= -->
+  <section class="panel panel--quiet reveal" id="what-happened" aria-labelledby="wh-h2">
+    <p class="eyebrow">The night of the attack</p>
+    <h2 id="wh-h2">What Happened</h2>
+    <div class="measure">
+      <p>On the evening of August 28, 2026, a Russian attack completely destroyed the warehouse and office of Ukraine for Christ's Humanitarian Ministry. It was an entirely civilian facility that had been used every day for more than four years to help people affected by the war.</p>
+      <p>In one night, we lost food, humanitarian aid, boxes and packing supplies, equipment, tools, generators, vehicles, and ministry materials. But this was much more than the loss of a building or its contents. A place that connected volunteers, churches, humanitarian partners, and communities across Ukraine was gone.</p>
+      <p class="statement">We believe this is not the end.</p>
+    </div>
+    <!-- Before / after — the same warehouse. The captions are the ones from your
+         original build; the "Before" / "After" labels were dropped because the
+         captions already say it and the source document has no such labels. -->
+    <div class="ba">
+      <figure>
+        <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_4_2026-09-02_15-43-57.jpg"
+             width="1280" height="960" loading="lazy"
+             alt="Inside the warehouse before the attack: racking and pallets stacked with food, water, and relief supplies.">
+        <figcaption>The humanitarian warehouse fully stocked, before the attack.</figcaption>
+      </figure>
+      <figure>
+        <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_3_2026-09-02_15-43-57.jpg"
+             width="1280" height="960" loading="lazy"
+             alt="The warehouse still burning after the strike, its steel frame exposed and roofing panels thrown across the ground.">
+        <figcaption>Fire still burning in the warehouse after the attack, <span class="date">August 28, 2026</span>.</figcaption>
+      </figure>
+    </div>
+
+    <figure class="band">
+      <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_2_2026-09-02_15-43-57.jpg"
+           width="1280" height="960" loading="lazy"
+           alt="The gutted two-storey office building at dawn, its walls torn open and debris scattered across the yard.">
+      <figcaption>The office building the morning after the strike, <span class="date">August 28, 2026</span>.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============================= IMPACT ============================= -->
+  <section class="panel reveal" id="impact" aria-labelledby="im-h2">
+    <p class="eyebrow">Since June 2022</p>
+    <h2 id="im-h2">What God Has Already Done Through This Ministry</h2>
+    <p class="section-intro">Since June 2022, God has used this humanitarian hub to make possible:</p>
+
+    <div class="stats">
+      <div class="stat">
+        <p class="stat__n">175,000</p>
+        <p class="stat__l">food boxes prepared for people in need, including Yellow Boxes, Christmas Boxes, and Military Boxes</p>
+      </div>
+      <div class="stat">
+        <p class="stat__n">600<span class="unit">+ tons</span></p>
+        <p class="stat__l">of humanitarian aid received and delivered from partners in Germany, the Netherlands, and Austria</p>
+      </div>
+      <div class="stat">
+        <p class="stat__n">1,000<span class="unit">+</span></p>
+        <p class="stat__l">volunteers serving from churches and charitable organizations</p>
+      </div>
+      <div class="stat">
+        <p class="stat__n">300<span class="unit">+</span></p>
+        <p class="stat__l">churches and nonprofit organizations across Ukraine</p>
+      </div>
+      <div class="stat">
+        <p class="stat__n">10</p>
+        <p class="stat__l">families receiving new homes through the Rebuild project</p>
+      </div>
+    </div>
+
+    <div class="measure">
+      <p>This hub was also the starting point for ministry trips to communities near the front lines. Through it, we served displaced families, families of fallen service members, veterans, chaplains, military personnel, and others living with the consequences of war.</p>
+    </div>
+
+    <!-- FIX: the "before" photo moved up into the before/after pair in "What Happened".
+         ⚠️ TODO: this section needs a photo with faces — volunteers or a family receiving
+         aid, ideally someone looking at the camera. Every image on the page right now is
+         objects and rubble, and this is the section where a person would do the most work. -->
+  </section>
+
+  <!-- ============================= REBUILD ============================= -->
+  <section class="panel reveal" id="rebuild" aria-labelledby="rb-h2">
+    <p class="eyebrow">The plan</p>
+    <h2 id="rb-h2">Rebuilding a Place to Serve</h2>
+    <div class="measure">
+      <p>We do not want this tragedy to stop the ministry God has entrusted to us. Our goal is to establish and equip a new, long-term humanitarian hub where we can receive and distribute aid, prepare boxes, coordinate volunteers, equip ministry teams, and continue turning shipping containers into homes for families who have lost theirs.</p>
+      <p>The hub will support all four of our humanitarian projects:</p>
+    </div>
+
+    <div class="projects">
+      <div class="project project--yellow">
+        <span class="project__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.5 12.5a1 1 0 0 1-1 .5H5.5a1 1 0 0 1-1-.5L3 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><path d="M9 12h6"/></svg>
+        </span>
+        <h3>Yellow Box</h3>
+        <p>Food and essential supplies and spiritual care for families in crisis.</p>
+      </div>
+      <div class="project project--christmas">
+        <span class="project__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M3 13h18"/><path d="M12 8v13"/><path d="M12 8C12 8 10.5 3 8 4.2 6.3 5 7.8 8 12 8Z"/><path d="M12 8c0 0 1.5-5 4-3.8C17.7 5 16.2 8 12 8Z"/></svg>
+        </span>
+        <h3>Christmas Box</h3>
+        <p>Practical care, encouragement, and the message of Christ during the Christmas season.</p>
+      </div>
+      <div class="project project--military">
+        <span class="project__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </span>
+        <h3>Military Box</h3>
+        <p>Practical supplies and spiritual care for Ukrainian military personnel.</p>
+      </div>
+      <div class="project project--rebuild">
+        <span class="project__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+        </span>
+        <h3>Rebuild</h3>
+        <p>New homes and renewed hope for families whose homes have been destroyed by the war.</p>
+      </div>
+    </div>
+
+    <!-- FIX: this photo used to sit inside the Rebuild card only, forcing the other
+         three cards to stretch to its height with empty space below their text. -->
+    <figure class="band">
+      <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_6_2026-09-02_15-43-57.jpg"
+           width="1280" height="853" loading="lazy"
+           alt="A container home loaded on a truck, leaving the hub for a family that lost its house in the war.">
+    </figure>
+
+    <div class="measure">
+      <p>Your gift will help us secure and prepare a new location, build and equip the hub, replace essential tools and equipment, restore our ability to receive and deliver humanitarian aid, and continue these ministries wherever the need is greatest.</p>
+    </div>
+  </section>
+
+  <!-- ============================= CHRISTMAS PRIORITY ============================= -->
+  <section class="christmas reveal" id="christmas" aria-labelledby="cx-h2">
+    <div class="christmas__grid">
+      <div>
+        <!-- FIX: this eyebrow was #5a5230 on saturated gold — 4.38:1, below AA for text this size. -->
+        <p class="eyebrow">Time-sensitive</p>
+        <h2 id="cx-h2">Our Immediate Christmas Priority</h2>
+        <p>The Christmas season is approaching, and it has always been one of the most active times for our humanitarian ministry. We want to be ready to prepare Christmas Boxes and help churches serve vulnerable families across Ukraine. Restoring our capacity now will help ensure that this tragedy does not become a stopping point for the ministry.</p>
+        <!-- Full countdown. The ticking digits are aria-hidden so a screen reader is not
+             read a new number every second; the sentence below carries the same
+             information and is refreshed once a minute. -->
+        <div class="count" id="countdown" aria-hidden="true">
+          <div><span class="count__n" id="cd-d">--</span><span class="count__u">Days</span></div>
+          <div><span class="count__n" id="cd-h">--</span><span class="count__u">Hours</span></div>
+          <div><span class="count__n" id="cd-m">--</span><span class="count__u">Minutes</span></div>
+          <div><span class="count__n" id="cd-s">--</span><span class="count__u">Seconds</span></div>
+        </div>
+        <p class="count__label" id="cd-label">Time remaining until December 1, 2026</p>
+        <p class="vh" id="cd-sr"></p>
+      </div>
+      <figure style="margin:0">
+        <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/photo_5_2026-09-02_15-43-57.jpg"
+             width="1100" height="1280" loading="lazy"
+             alt="A team of volunteers in the warehouse holding Christmas Boxes prepared for families across Ukraine.">
+        <figcaption>Volunteers preparing Christmas Boxes at the hub.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================= PARTNER / GIVE ============================= -->
+  <section class="panel reveal" id="give" aria-labelledby="pt-h2">
+    <p class="eyebrow">Partner with us</p>
+    <h2 id="pt-h2">Partner With Us</h2>
+    <p class="lead">Will you help us rebuild the humanitarian hub and restore the capacity to serve?</p>
+    <div class="measure">
+      <p>A gift of any amount will help create a place where volunteers can serve, churches can work together, humanitarian aid can be prepared and sent, families can receive homes, and people across Ukraine can experience the love of Christ in practical ways.</p>
+      <p>We have seen how much God can do through one place offered for His purposes. With your partnership, we believe this ministry can rise from loss and continue bringing practical help and the hope of the Gospel to people who need it.</p>
+    </div>
+
+    <!-- Progress bar. Renders only when CAMPAIGN.goal > 0 in the <script> below;
+         with goal still at 0 it stays hidden, so nothing looks broken before the
+         target is set. TODO: set CAMPAIGN.goal / raised / donors. -->
+    <div class="progress" id="progress" role="group" aria-label="Fundraising progress" hidden>
+      <div class="progress__meta">
+        <span class="raised" id="cmp-raised">$0</span>
+        <span class="goal" id="cmp-goal">of $0 goal</span>
+      </div>
+      <div class="progress__track">
+        <div class="progress__fill" id="cmp-bar"></div>
+      </div>
+      <p class="progress__donors" id="cmp-donors">0 donors so far</p>
+    </div>
+
+    <h3 style="margin-top:2.4rem">Choose How to Give</h3>
+    <div class="give-grid">
+      <div class="give-card give-card--cru">
+        <h4>Give Through Cru (U.S.)</h4>
+        <p>For donors who would like a U.S. tax-deductible receipt. A 13% Cru assessment applies to each gift.</p>
+        <a class="btn btn--block" href="https://give.cru.org/1394263" target="_blank" rel="noopener noreferrer">Give through Cru<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+      <div class="give-card give-card--direct">
+        <h4>Give Directly to Ukraine</h4>
+        <p>Give by bank card from anywhere in the world. Funds go directly to our Ukrainian office. Include your email address in the payment description to receive a donation receipt. We cannot guarantee that it will qualify for a tax deduction in your country.</p>
+        <!-- ⚠️ TODO — DECISION NEEDED. The base64 payload in this link decodes to:
+               { "version":3, "action":"paydonate", "amount":"50", "currency":"USD",
+                 "description":"Voluntary Donation for Statute Activity from . Code 91039.",
+                 "public_key":"i38365265142", "language":"en" }
+             Two problems:
+               a) amount is hard-coded to $50. Every donor lands on a $50 form regardless
+                  of the tile they picked above. Generate a link without a fixed amount,
+                  or one link per amount ($50/$100/$250/$1,000) and wire the tiles to them.
+               b) the description contains a broken string — "Activity from . Code 91039."
+                  The donor sees this text on the payment page.
+             Both require re-signing the payload in your LiqPay account, so the link is
+             left untouched here. -->
+        <a class="btn btn--block" href="https://www.liqpay.ua/api/3/checkout?data=eyJ2ZXJzaW9uIjozLCJhY3Rpb24iOiJwYXlkb25hdGUiLCJhbW91bnQiOiI1MCIsImN1cnJlbmN5IjoiVVNEIiwiZGVzY3JpcHRpb24iOiJWb2x1bnRhcnkgRG9uYXRpb24gZm9yIFN0YXR1dGUgQWN0aXZpdHkgZnJvbSAuIENvZGUgOTEwMzkuIiwicHVibGljX2tleSI6ImkzODM2NTI2NTE0MiIsImxhbmd1YWdlIjoiZW4ifQ==&signature=SWI26W/sJUnIC0CRY6vU7nWh+aM=" target="_blank" rel="noopener noreferrer">Give directly to Ukraine<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+    <p class="fineprint">Both links open on an external secure payment page in a new tab.</p>
+  </section>
+
+  <!-- ============================= PRAYER ============================= -->
+  <!-- The email-capture block that used to sit here has been removed: its copy was not
+       in the source document. Say the word and it comes back with wording you write. -->
+  <section class="prayer reveal" aria-labelledby="pr-h2">
+    <p class="eyebrow" style="color:rgba(255,255,255,.6)">Pray with us</p>
+    <h2 id="pr-h2">Pray With Us</h2>
+    <p>Please also pray with us for wisdom, strength, and clarity as we take the next steps.</p>
+  </section>
+
+</div>
+</main>
+
+<div class="wrap footer-wrap">
+<footer class="site-footer">
+
+  <!-- Left: logo + Scripture -->
+  <div class="site-footer__col site-footer__col--left">
+    <div class="foot-logos">
+      <a href="https://www.facebook.com/ukraineforchrist.org" target="_blank" rel="noopener noreferrer" aria-label="Ukraine for Christ on Facebook">
+        <img src="https://raw.githubusercontent.com/kostiantyn-shevchenko-cru/Humanitarian/main/Ukraine%20for%20Christ%20(1).png" alt="Ukraine for Christ" width="1600" height="587" loading="lazy">
+      </a>
+    </div>
+    <p class="foot-verse">"They will rebuild the ancient ruins; they will restore the places long devastated; they will renew the ruined cities, the desolations of many generations." <span>Isaiah 61:4</span></p>
+  </div>
+
+  <!-- Right: social + copyright -->
+  <div class="site-footer__col site-footer__col--right">
+    <div class="foot-social">
+      <a href="https://www.facebook.com/ufcmission" target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Ukraine for Christ on Facebook">
+        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
+      </a>
+      <a href="https://www.instagram.com/ufc.mission/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Ukraine for Christ on Instagram">
+        <svg aria-hidden="true" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"></path></svg>
+      </a>
+    </div>
+    <p class="foot-copy">&copy; 2026 Ukraine for Christ. All rights reserved.</p>
+  </div>
+
+</footer>
+</div>
+
+<!-- Lightbox. Populated and shown by the script below; inert without JS. -->
+<div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo">
+  <button class="lb__close" id="lb-close" type="button" aria-label="Close photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <figure>
+    <img id="lb-img" src="" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Sticky header compaction after 100px ---- */
+  var header = document.getElementById('top');
+  /* FIX: anchor scroll offset now follows the real header height instead of a
+     hard-coded 104px that no longer matched the collapsed header. */
+  function syncAnchorOffset(){
+    document.documentElement.style.setProperty('--anchor-offset', (header.offsetHeight + 16) + 'px');
+  }
+  function onScrollHeader(){
+    if (window.scrollY > 100) header.classList.add('is-scrolled');
+    else header.classList.remove('is-scrolled');
+    syncAnchorOffset();
+  }
+  onScrollHeader();
+  window.addEventListener('scroll', onScrollHeader, { passive:true });
+  window.addEventListener('resize', syncAnchorOffset, { passive:true });
+
+  /* ---- Reveal on scroll (soft fade-up only) ----
+     Plain scroll check + a safety timeout. No IntersectionObserver: the
+     visible-by-default fallback lives in CSS/<noscript>, and this keeps the
+     "worst case" as "everything is simply shown", never a blank section. */
+  var revealEls = [].slice.call(document.querySelectorAll('.reveal'));
+  function showAll(){ revealEls.forEach(function(el){ el.classList.add('in'); }); revealEls = []; }
+  if (reduce){
+    showAll();
+  } else {
+    var checkReveal = function(){
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      revealEls = revealEls.filter(function(el){
+        if (el.getBoundingClientRect().top < vh * 0.92){ el.classList.add('in'); return false; }
+        return true;
+      });
+    };
+    var rafPending = false;
+    var onScrollReveal = function(){
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(function(){ rafPending = false; checkReveal(); });
+    };
+    checkReveal();
+    window.addEventListener('scroll', onScrollReveal, { passive:true });
+    window.addEventListener('resize', onScrollReveal, { passive:true });
+    window.addEventListener('load', checkReveal);
+    setTimeout(showAll, 2500); /* safety net */
+  }
+
+  /* ---- Countdown to December 1, 2026 (Kyiv time, UTC+2 in December) ---- */
+  var target = new Date('2026-12-01T00:00:00+02:00').getTime();
+  var cd = document.getElementById('countdown');
+  var elD = document.getElementById('cd-d'), elH = document.getElementById('cd-h'),
+      elM = document.getElementById('cd-m'), elS = document.getElementById('cd-s'),
+      label = document.getElementById('cd-label'), sr = document.getElementById('cd-sr');
+  var lastSrMinute = -1;
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  function tick(){
+    var diff = target - Date.now();
+    if (diff <= 0){
+      if (cd) cd.hidden = true;
+      if (label) label.hidden = true;
+      if (sr) sr.textContent = '';
+      return false;
+    }
+    var s = Math.floor(diff / 1000);
+    var days = Math.floor(s / 86400), hrs = Math.floor((s % 86400) / 3600),
+        mins = Math.floor((s % 3600) / 60);
+    elD.textContent = days;
+    elH.textContent = pad(hrs);
+    elM.textContent = pad(mins);
+    elS.textContent = pad(s % 60);
+    /* Text equivalent for screen readers — refreshed once a minute, not every second. */
+    if (sr && mins !== lastSrMinute){
+      lastSrMinute = mins;
+      sr.textContent = days + ' days and ' + hrs + ' hours remaining until December 1, 2026.';
+    }
+    return true;
+  }
+  if (cd && elD){
+    if (tick()){
+      var iv = setInterval(function(){ if (!tick()) clearInterval(iv); }, 1000);
+    }
+  }
+
+  /* ---- Lightbox: every photo inside a <figure> opens full size ---- */
+  var lb = document.getElementById('lightbox'),
+      lbImg = document.getElementById('lb-img'),
+      lbCap = document.getElementById('lb-cap'),
+      lbClose = document.getElementById('lb-close'),
+      lastOpener = null;
+
+  function openLightbox(img){
+    var fig = img.closest('figure');
+    var cap = fig ? fig.querySelector('figcaption') : null;
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || '';
+    lbCap.innerHTML = cap ? cap.innerHTML : '';
+    lbCap.hidden = !cap;
+    lb.hidden = false;
+    document.body.classList.add('lb-open');
+    lastOpener = img;
+    lbClose.focus();
+  }
+  function closeLightbox(){
+    lb.hidden = true;
+    lbImg.removeAttribute('src');
+    document.body.classList.remove('lb-open');
+    if (lastOpener){ lastOpener.focus(); lastOpener = null; }
+  }
+
+  if (lb && lbImg){
+    [].slice.call(document.querySelectorAll('figure img')).forEach(function(img){
+      if (img.closest('.lb')) return; /* the lightbox's own <figure> is not a target */
+      img.classList.add('zoomable');
+      img.setAttribute('role', 'button');
+      img.setAttribute('tabindex', '0');
+      img.setAttribute('aria-label', 'Open larger photo' + (img.alt ? ': ' + img.alt : ''));
+      img.addEventListener('click', function(){ openLightbox(img); });
+      img.addEventListener('keydown', function(e){
+        if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
+          e.preventDefault();
+          openLightbox(img);
+        }
+      });
+    });
+    lbClose.addEventListener('click', closeLightbox);
+    /* A click anywhere outside the photo closes it. */
+    lb.addEventListener('click', function(e){
+      if (e.target === lb || e.target.tagName === 'FIGURE') closeLightbox();
+    });
+    document.addEventListener('keydown', function(e){
+      if (lb.hidden) return;
+      if (e.key === 'Escape'){ closeLightbox(); return; }
+      /* Keep focus inside the dialog — the close button is its only control. */
+      if (e.key === 'Tab'){ e.preventDefault(); lbClose.focus(); }
+    });
+  }
+
+  /* ===========================================================================
+     CAMPAIGN progress bar — live, but self-hiding.
+     ⚠️ TODO: set goal (and raised / donors as gifts come in). Amounts are USD.
+     While goal is 0 the block stays hidden, so the page never shows an empty bar.
+     =========================================================================== */
+  var CAMPAIGN = { goal: 0, raised: 0, donors: 0 };
+  (function renderCampaign(){
+    var wrap = document.getElementById('progress');
+    if (!wrap) return;
+    if (!CAMPAIGN.goal || CAMPAIGN.goal <= 0){ wrap.hidden = true; return; }
+    var usd = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+    var pct = Math.min(100, (CAMPAIGN.raised / CAMPAIGN.goal) * 100);
+    document.getElementById('cmp-raised').textContent = usd(CAMPAIGN.raised);
+    document.getElementById('cmp-goal').textContent   = 'of ' + usd(CAMPAIGN.goal) + ' goal';
+    document.getElementById('cmp-donors').textContent =
+      CAMPAIGN.donors.toLocaleString('en-US') + ' donors so far';
+    wrap.hidden = false;
+    requestAnimationFrame(function(){ document.getElementById('cmp-bar').style.width = pct + '%'; });
+    wrap.setAttribute('aria-valuenow', Math.round(pct));
+  })();
+})();
+</script>
+</body>
+</html>
