@@ -1,4 +1,7 @@
 <svg width="585" height="587" viewBox="0 0 585 587" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+  @media (prefers-color-scheme: dark) { :root { filter: invert(1); } }
+</style>
 <rect width="585" height="587" fill="url(#pattern0_2174_2)"/>
 <defs>
 <pattern id="pattern0_2174_2" patternContentUnits="objectBoundingBox" width="1" height="1">
